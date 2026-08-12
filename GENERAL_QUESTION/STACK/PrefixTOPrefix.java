@@ -1,0 +1,102 @@
+import java.util.*;
+
+public class PrefixTOPrefix {
+
+    public static void main(String[] args) {
+
+        String str = "9-(5+3)*4/6";
+
+        Stack<String> val = new Stack<>();
+        Stack<Character> op = new Stack<>();
+
+        for (int i = 0; i < str.length(); i++) {
+
+            char ch = str.charAt(i);
+            int asali = (int) ch;
+
+            // Number
+            if (asali >= 48 && asali <= 57) {
+
+                String s = "" + ch;
+                val.push(s);
+
+            }
+
+            // Closing bracket
+            else if (ch == ')') {
+
+                while (op.peek() != '(') {
+
+                    String v2 = val.pop();
+                    String v1 = val.pop();
+
+                    char o = op.pop();
+
+                    String t = o + v1 + v2;
+
+                    val.push(t);
+                }
+
+                op.pop(); // remove '('
+            }
+
+            // Opening bracket or empty operator stack
+            else if (op.size() == 0 || ch == '(' || op.peek() == '(') {
+
+                op.push(ch);
+            }
+
+            // + or -
+            else if (ch == '+' || ch == '-') {
+
+                String v2 = val.pop();
+                String v1 = val.pop();
+
+                char o = op.pop();
+
+                String t = o + v1 + v2;
+
+                val.push(t);
+
+                op.push(ch);
+            }
+
+            // * or /
+            else if (ch == '*' || ch == '/') {
+
+                if (op.peek() == '*' || op.peek() == '/') {
+
+                    String v2 = val.pop();
+                    String v1 = val.pop();
+
+                    char o = op.pop();
+
+                    String t = o + v1 + v2;
+
+                    val.push(t);
+
+                    op.push(ch);
+
+                } else {
+
+                    op.push(ch);
+                }
+            }
+        }
+
+        // Process remaining operators
+        while (val.size() > 1) {
+
+            String v2 = val.pop();
+            String v1 = val.pop();
+
+            char o = op.pop();
+
+            String t = o + v1 + v2;
+
+            val.push(t);
+        }
+
+        System.out.println(val.peek());
+    }
+}

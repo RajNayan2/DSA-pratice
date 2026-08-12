@@ -1,0 +1,6 @@
+/**
+ * Char
+ */
+public class Char {
+
+}
