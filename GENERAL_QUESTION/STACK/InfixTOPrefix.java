@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class PrefixTOPrefix {
+public class InfixTOPrefix {
 
     public static void main(String[] args) {
 
